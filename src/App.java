@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  * 
- * @author Annderson Packeiser
+ * @author Annderson Packeiser Oreto
  * @author Gabriel Franzoni
  *
  */
@@ -34,7 +34,8 @@ public class App {
 												getValues(data,2),
 												getValues(data,3),
 												getValues(data,4),
-												getValues(data,5));
+												getValues(data,5),
+												getValues(data,6));
 			//queue.
 			
 			for(String e : data){
