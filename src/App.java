@@ -19,8 +19,9 @@ public class App {
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		Scanner in = new Scanner(System.in);
-		System.out.println("Digite o arquivo de entrada (com a extensão)");
-		String inputFile = in.nextLine();
+		//System.out.println("Digite o arquivo de entrada (com a extensão)");
+		//String inputFile = in.nextLine();
+		String inputFile = "chanin.txt";
 		
 		try {
 			

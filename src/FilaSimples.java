@@ -133,48 +133,77 @@ public class FilaSimples {
 		// ESTA PRIMEIRA PARTE ANTES DA ITERAÇÃO, ELE SEMPRE PEGA O PRIMEIRO
 		actualEvent = eventTable[0][0];
 		eventTable[0][0] = -1;
+		eventTable[1][0] = 99999;
+		eventTable[2][0] = 99999;
+		
 
 		if(actualEvent == 0) chegada();
 		else saida();
 
 		int chosen = -2;
 		while(it < 20){
+			System.out.println("ITITITITIT" + it);
 			double lessTime = 9999;
 			System.out.println("CHOSENZÃO " + chosen);
 			// procura o proximo evento
-			for(int i =0;i < itEvent; i++){
-				if(eventTable[0][i] != -1){
+			for(int i =0;i <= itEvent; i++){
+				System.out.println("EVEVEEVVEE " + itEvent);
+				if(eventTable[0][i] != -1.0){
+					System.out.println("TO TOCANDO BAIXO THA? " + eventTable[0][i]);
 					if(eventTable[1][i] < lessTime){
 						lessTime = eventTable[1][i];
+						System.out.println("KOPS PUTINHA " + chosen);
 						chosen = i;
+						System.out.println("KOPS GATINHA " + chosen);
+						System.out.println("PQ Q DA??? " + eventTable[0][chosen]);
 					}
 				}
 			}
 			// terei um escolhido. preciso agr ver se e entrada ou saido (e botar 2) e iniciar a chegada/saida
 			// tambem preciso atualizar o actualTime com o tempo sorteado dele
-			double aux = actualTime;
-			actualTime += eventTable[2][chosen];
-			prevTime = aux;
 			if(eventTable[0][chosen] == 0){
 				System.out.println("ALFIO");
+				double aux = actualTime;
+				actualTime += eventTable[2][chosen];
+				prevTime = aux;
 				chegada();
 				eventTable[0][chosen] = -1;
+				eventTable[1][chosen] = 99999;
 			}
 			else if(eventTable[0][chosen] == 1){
+				System.out.println("MARTINI");
+				double aux = actualTime;
+				actualTime += eventTable[2][chosen];
+				prevTime = aux;
 				saida();
 				eventTable[0][chosen] = -1;
+				eventTable[1][chosen] = 99999;
 			}
 			else{
+				System.out.println("PQ Q DA??? " + eventTable[0][chosen]);
+				System.out.println("PQ Q DEU MERDA??? " + chosen);
 				System.out.println("DEU MERDA");
-				return;
+				break;
 			}
 		}
+		System.out.println("\n\n\n\n\n\n\n\n\n");
 		System.out.println("RESULTADOS FINAIS");
-		System.out.print(table[0][it] + "  ");
-		System.out.print(table[1][it] + "  ");
+		System.out.print(table[0][it] + " ");
+		System.out.printf("%.3f  ", table[1][it]);
 		for(int i = 0; i <= cap; i++){
-			System.out.print(table[i+2][it] + "  ");
+			System.out.printf("%.3f  ", table[i+2][it]);
 		}
+		System.out.println("\n\n\n\n\n\n\n\n\n");
+
+		System.out.println("\n\n\n\n\n\n\n\n\n");
+		System.out.println("TABELA GAY (FILA, TEMPO, 0, 1, 2, 3)");
+		for(int j = 0; j  <= cap+2; j++){
+			for(int i = 0; i <= it; i++){
+				System.out.printf("%.2f | ", table[j][i]);
+			}
+			System.out.println();
+		}
+		System.out.println("\n\n\n\n\n\n\n\n\n");
 	}
 
 	public void chegada(){
@@ -190,16 +219,18 @@ public class FilaSimples {
 			}
 
 			// AGORA ALTERAMOS, PREENCHENDO APENAS O TEMPO NOVO
-			table[fila+2][it] = actualTime - prevTime;
+			table[fila+2][it] = table[fila+2][it-1] + (actualTime - prevTime);
 			//BOTA O TEMPO
 			table[1][it] = actualTime;
 			//Agora bota o tamanho da fila atual (ALGORITMO)
 			fila++;
 			table[0][it] = fila;
+			System.out.println("AGENDA SAIDA");
 			if(fila <= server) {
 				agendaSaida();
 			}
 		}
+		System.out.println("AGENDA ENTRADA");
 		agendaEntrada();
 	}
 
@@ -210,11 +241,12 @@ public class FilaSimples {
 			table[i][it] = table[i][it-1];
 		}
 		// AGORA ALTERAMOS, PREENCHENDO APENAS O TEMPO NOVO
-		table[fila+2][it] = actualTime - prevTime;
+		table[fila+2][it] = table[fila+2][it-1] + (actualTime - prevTime);
 		//BOTA O TEMPO
 		table[1][it] = actualTime;
 		//Agora bota o tamanho da fila atual (ALGORITMO)
 		fila--;
+		table[0][it] = fila;
 		if(fila >= server) {
 			agendaSaida();
 		}
