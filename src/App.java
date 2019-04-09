@@ -37,6 +37,7 @@ public class App {
 												getValues(data,5),
 												getValues(data,6));
 			//queue.
+			queue.startSimulation();
 			
 			for(String e : data){
 				System.out.println(e); // DEBUG SHIT

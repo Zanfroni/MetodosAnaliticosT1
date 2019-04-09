@@ -15,9 +15,9 @@ public class FilaSimples {
 	private double auxIndex;
 
 	// IMPORTANT STUFF
-	private double table[][] = new double[cap+3][25];
-	private double eventTable[][] = new double[3][100];
-	private double actualTime = time;
+	private double table[][];
+	private double eventTable[][];
+	private double actualTime;
 
 	public FilaSimples(int inA, int inB, int outA, int outB, int server, int cap, double time){
 		this.inA = inA;
@@ -35,6 +35,9 @@ public class FilaSimples {
 		System.out.println(server);
 		System.out.println(cap);
 		System.out.println(time);
+		table = new double[cap+3][25];
+		eventTable = new double[3][100];
+		actualTime = time;
 	}
 	
 	// SIMULACAO AQUI DEVE SAIR OS RESULTADOS
@@ -134,9 +137,10 @@ public class FilaSimples {
 		if(actualEvent == 0) chegada();
 		else saida();
 
-		int chosen = -1;
+		int chosen = -2;
 		while(it < 20){
 			double lessTime = 9999;
+			System.out.println("CHOSENZÃO " + chosen);
 			// procura o proximo evento
 			for(int i =0;i < itEvent; i++){
 				if(eventTable[0][i] != -1){
@@ -152,6 +156,7 @@ public class FilaSimples {
 			actualTime += eventTable[2][chosen];
 			prevTime = aux;
 			if(eventTable[0][chosen] == 0){
+				System.out.println("ALFIO");
 				chegada();
 				eventTable[0][chosen] = -1;
 			}
@@ -159,15 +164,28 @@ public class FilaSimples {
 				saida();
 				eventTable[0][chosen] = -1;
 			}
-			else return;
+			else{
+				System.out.println("DEU MERDA");
+				return;
+			}
+		}
+		System.out.println("RESULTADOS FINAIS");
+		System.out.print(table[0][it] + "  ");
+		System.out.print(table[1][it] + "  ");
+		for(int i = 0; i <= cap; i++){
+			System.out.print(table[i+2][it] + "  ");
 		}
 	}
 
 	public void chegada(){
+		System.out.println("ajisadfjf");
 		if (fila < cap){
 			it++;
+			System.out.println("KOPS IT " + it);
 			// PREENCHE A TABLE COM TODOS OS VALORES ANTERIORES
+			System.out.println("ajisadfjfKOPS");
 			for(int i = 0; i <= cap+2; i++){
+				System.out.println("ajisadfjfKOPSGAY LIXO CAGADO " + i + " " + it);
 				table[i][it] = table[i][it-1];
 			}
 
