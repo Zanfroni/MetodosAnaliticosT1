@@ -26,9 +26,9 @@ public class Generator {
 
 	// O metodo cria um PrintWriter para criar um .txt e escrever nele
 	public void generate() {
-		double a = 3;
-		double c = 0.431;
-		double x = 0.56;
+		double a = 19;
+		double c = 0.221;
+		double x = 0.81;
 		double m = 1;
 
 		// Os valores que sao gerados pela formula abaixo sao guardados num

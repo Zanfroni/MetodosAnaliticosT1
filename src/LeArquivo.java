@@ -21,7 +21,6 @@ public class LeArquivo {
 			
 			while ((sCurrentLine = br.readLine()) != null) {
 				data.add(sCurrentLine);
-				System.out.println(sCurrentLine); //DEBUG SHIT
 			}
 			
 		} catch (IOException e) {
@@ -40,8 +39,6 @@ public class LeArquivo {
 				ex.printStackTrace();
 				
 			}
-			
-			System.out.println("Oi gatinha!!"); //DEBUG SHIT
 			
 		}
 		return data;

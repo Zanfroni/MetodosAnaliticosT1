@@ -19,9 +19,9 @@ public class App {
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		Scanner in = new Scanner(System.in);
-		//System.out.println("Digite o arquivo de entrada (com a extensão)");
-		//String inputFile = in.nextLine();
-		String inputFile = "chanin.txt";
+		System.out.println("Digite o arquivo de entrada (com a extensão)");
+		String inputFile = in.nextLine();
+		//String inputFile = "chanin.txt";
 		
 		try {
 			
@@ -37,12 +37,7 @@ public class App {
 												getValues(data,4),
 												getValues(data,5),
 												getValues(data,6));
-			//queue.
 			queue.startSimulation();
-			
-			for(String e : data){
-				System.out.println(e); // DEBUG SHIT
-			}
 			
 		} catch(FileNotFoundException e) {
 			System.out.println("Arquivo não encontrado. Tente novamente...");

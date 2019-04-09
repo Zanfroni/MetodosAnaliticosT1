@@ -18,6 +18,9 @@ public class FilaSimples {
 	private double table[][];
 	private double eventTable[][];
 	private double actualTime;
+	
+	//USELESS??
+	private int auxit;
 
 	public FilaSimples(int inA, int inB, int outA, int outB, int server, int cap, double time){
 		this.inA = inA;
@@ -27,93 +30,10 @@ public class FilaSimples {
 		this.server = server;
 		this.cap = cap;
 		this.time = time;
-		System.out.println("DEBUGGING SHIT OKAYYY");
-		System.out.println(inA);               // DEBUGGGGGGING SAHIT
-		System.out.println(inB);
-		System.out.println(outA);
-		System.out.println(outB);
-		System.out.println(server);
-		System.out.println(cap);
-		System.out.println(time);
 		table = new double[cap+3][25];
 		eventTable = new double[3][100];
 		actualTime = time;
 	}
-	
-	// SIMULACAO AQUI DEVE SAIR OS RESULTADOS
-	// DEADLINE PARA TERMINAR ISTO SERIA AMANHA
-	// USAR AULA DE HOJE PARA TIRAR UMAS DUVIDAS SOBRE
-	// CODIGO (ESTRUTURA, CONSISTENCIA E OTIMIZACAO)
-	// OUTPUTS (DEVO ESCREVER?? IMPRIMIR... COMO CARALHOS GERAR GRAFICO)
-	// DEIXEI PARA AMANHA PRA PROGRAMAR POIS DEPENDE DESSAS DUVIDAS
-	
-	/**public void startSimulation(){
-		double table[][] = new double[cap+3][20];
-		String eventTable[][] = new String[3][20];
-		double actualTime = time;
-		table[0][0] = fila;
-		table[0][1] = 0.0;
-		for (int i = 2; i < cap+3; i++) table[0][i] = 0.0;
-		for (int i = 1; i < 20; i++) {
-			chegada(i);
-		}
-	}
-
-	public void chegada(int i) {
-		if (fila < cap) {
-			String aux[] = eventTable[j];
-			eventTable[j][2] = null;
-			for (int i = 0; i < eventTable.length; i++) {
-				
-			}
-			= actualTime - table[i-1][1];
-			fila++;
-			table[i][0] = fila;
-			if (fila <= server) {
-				agendaSaida(table[i][1] + ((outB - outA) * g.nextRandom() + outA);
-			}
-		}
-		agendaChegada(table[i][1] + ((inB - inA) * g.nextRandom() + inA);
-	}
-
-	public void saida(double rand) {
-		fila--;
-		if (fila >= 1) {
-			agendaSaida(table[i][1] + ((outB - outA) * g.nextRandom() + outA);
-		}
-	}
-
-	public void agendaSaida(double rand) {
-		eventTable[j][0] = "s" + j;
-		eventTable[j][1] = "" + (table[1][i] + rand);
-		eventTable[j][2] = "" + rand;
-		ordena();
-	}
-
-	public void agendaChegada(double rand) {
-		eventTable[j][0] = "c" + j;
-		eventTable[j][1] = "" + (table[1][i] + rand);
-		eventTable[j][2] = "" + rand;
-		ordena();
-	}
-
-	public void ordena() {
-		for (int k = 0; k < eventTable.length-1; i++) {
-		for (int i = 0; i < eventTable.length-1; i++) {
-			if (eventTable[j+1][2] != null && eventTable[j][2] != null) {
-			if (Double.parseDouble(eventTable[i][2]) > Double.parseDouble(eventTable[i][2])) {
-				double aux = Double.parseDouble(eventTable[i][2]);
-				eventTable[i][2] = eventTable[i+1][2];
-				eventTable[i+1][2] = aux + "";
-			}
-			} else {
-				break;
-			}
-		}
-		}
-	}
-	**/
-
 
 	public void startSimulation(){
 		
@@ -134,7 +54,7 @@ public class FilaSimples {
 		actualEvent = eventTable[0][0];
 		eventTable[0][0] = -1;
 		eventTable[1][0] = 99999;
-		eventTable[2][0] = 99999;
+		eventTable[2][0] = 0;
 		
 
 		if(actualEvent == 0) chegada();
@@ -142,36 +62,38 @@ public class FilaSimples {
 
 		int chosen = -2;
 		while(it < 20){
-			System.out.println("ITITITITIT" + it);
 			double lessTime = 9999;
-			System.out.println("CHOSENZÃO " + chosen);
 			// procura o proximo evento
 			for(int i =0;i <= itEvent; i++){
-				System.out.println("EVEVEEVVEE " + itEvent);
 				if(eventTable[0][i] != -1.0){
-					System.out.println("TO TOCANDO BAIXO THA? " + eventTable[0][i]);
 					if(eventTable[1][i] < lessTime){
 						lessTime = eventTable[1][i];
-						System.out.println("KOPS PUTINHA " + chosen);
 						chosen = i;
-						System.out.println("KOPS GATINHA " + chosen);
-						System.out.println("PQ Q DA??? " + eventTable[0][chosen]);
 					}
 				}
 			}
-			// terei um escolhido. preciso agr ver se e entrada ou saido (e botar 2) e iniciar a chegada/saida
+			// terei um escolhido. preciso agr ver se e entrada ou saido (e botar -1) e iniciar a chegada/saida
 			// tambem preciso atualizar o actualTime com o tempo sorteado dele
 			if(eventTable[0][chosen] == 0){
-				System.out.println("ALFIO");
+				double notin = prevTime;
 				double aux = actualTime;
 				actualTime += eventTable[2][chosen];
 				prevTime = aux;
 				chegada();
+				// aqui ele faz um especial caso fila esteja já cheia.
+				if(auxit == it){
+					actualTime = prevTime;
+					prevTime = notin;
+					table[fila+2][auxit] += (actualTime - prevTime);
+					notin = prevTime;
+					aux = actualTime;
+					actualTime += eventTable[2][chosen];
+					prevTime = aux;
+				}
 				eventTable[0][chosen] = -1;
 				eventTable[1][chosen] = 99999;
 			}
 			else if(eventTable[0][chosen] == 1){
-				System.out.println("MARTINI");
 				double aux = actualTime;
 				actualTime += eventTable[2][chosen];
 				prevTime = aux;
@@ -180,9 +102,6 @@ public class FilaSimples {
 				eventTable[1][chosen] = 99999;
 			}
 			else{
-				System.out.println("PQ Q DA??? " + eventTable[0][chosen]);
-				System.out.println("PQ Q DEU MERDA??? " + chosen);
-				System.out.println("DEU MERDA");
 				break;
 			}
 		}
@@ -193,28 +112,45 @@ public class FilaSimples {
 		for(int i = 0; i <= cap; i++){
 			System.out.printf("%.3f  ", table[i+2][it]);
 		}
-		System.out.println("\n\n\n\n\n\n\n\n\n");
+		System.out.println("\n\n");
 
 		System.out.println("\n\n\n\n\n\n\n\n\n");
-		System.out.println("TABELA GAY (FILA, TEMPO, 0, 1, 2, 3)");
+		System.out.println("TABELA (FILA, TEMPO, 0, 1, 2, 3...N)");
 		for(int j = 0; j  <= cap+2; j++){
 			for(int i = 0; i <= it; i++){
 				System.out.printf("%.2f | ", table[j][i]);
 			}
 			System.out.println();
 		}
-		System.out.println("\n\n\n\n\n\n\n\n\n");
+		// DEBUGGAR, caso queira ver a tabela dos eventos
+		/*System.out.println("\n\n\n\n\n\n\n\n\n");
+		for(int j = 0; j  <= 2; j++){
+			for(int i = 0; i < itEvent; i++){
+				System.out.printf("%.2f | ", eventTable[j][i]);
+			}
+			System.out.println("\n\n\n\nCHECKPOINT\n\n\n\n\n");
+		}
+		System.out.println("\n\n\n\n\n\n\n\n\n");*/
+
+		// CALCULO DE PROPORCAO
+
+		double calculo;
+		for(int i = 0; i <= cap; i++){
+			calculo = table[2+i][it]/actualTime;
+			System.out.printf("%.2f porcento",calculo*100);
+			System.out.println();
+		}
+		System.out.print("TOTAL 100 porcento");
+		System.out.println();
+		
 	}
 
 	public void chegada(){
-		System.out.println("ajisadfjf");
+		auxit = it;
 		if (fila < cap){
 			it++;
-			System.out.println("KOPS IT " + it);
 			// PREENCHE A TABLE COM TODOS OS VALORES ANTERIORES
-			System.out.println("ajisadfjfKOPS");
 			for(int i = 0; i <= cap+2; i++){
-				System.out.println("ajisadfjfKOPSGAY LIXO CAGADO " + i + " " + it);
 				table[i][it] = table[i][it-1];
 			}
 
@@ -225,12 +161,10 @@ public class FilaSimples {
 			//Agora bota o tamanho da fila atual (ALGORITMO)
 			fila++;
 			table[0][it] = fila;
-			System.out.println("AGENDA SAIDA");
 			if(fila <= server) {
 				agendaSaida();
 			}
 		}
-		System.out.println("AGENDA ENTRADA");
 		agendaEntrada();
 	}
 
