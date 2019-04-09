@@ -25,8 +25,8 @@ public class Generator {
 	}
 
 	// O metodo cria um PrintWriter para criar um .txt e escrever nele
-	public static void generate() {
-		double a = 3
+	public void generate() {
+		double a = 3;
 		double c = 0.431;
 		double x = 0.56;
 		double m = 1;
@@ -37,7 +37,7 @@ public class Generator {
 		v2[0] = x;
 
 		// Formula do Congruente Linear sendo aplicada
-		for(int i = 1; i < v.length; i++){
+		for(int i = 1; i < v2.length; i++){
 			v2[i] = ((a * v2[i-1]) + c) % m;
 		}
 
