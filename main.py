@@ -17,7 +17,7 @@ def launch():
     
     # Variaveis importantes que nao devem ser alteradas
     current_iteration = 0
-    events = [{'queue':0,'event':'ch','time':actual_time,'shuffle':actual_time}]
+    events = [ {'queue':'Q1','event':'ch','time':actual_time,'shuffle':actual_time} ]
     all_queues = []
     
     # Agora, cria as filas
@@ -37,12 +37,33 @@ def launch():
     while True:
         if current_iteration >= iterations: break
         current_iteration += 1
-        event = fetch_event(events)
+        event = fetch_event(events) # cuida pra ver se events é realmente manipulada
+        
+        # Agora, com o evento, deve-se ver se ele e CH ou SA e contabilizar de acordo
+        # Tem que tambem ver se ele e intermediario ou nao
+        selectedQueue = '-1'
+        for i in all_queues:
+            print('oi ' + i.getId())
+            print('tchu ' + event['queue'])
+            if i.getId() == event['queue']: selectedQueue = i
+                        
+        print('got here ' + selectedQueue.getId())
+        
+        #BELEZA, FOI ESSA BOSTA!!
+        
+        if event['event'] == 'ch': print('CONTABILIZA')
+        elif event['event'] == 'sa': print('CAGABILIZA')
+        
+        
         
 def fetch_event(events):
     candidate = events.pop(0)
     for event in events:
-        if event['time'] < candidate: candidate = event['time']
+        if event['time'] < candidate['time']:
+            events.append(cadidate)
+            candidate = event
+            events.remove(event)
+    return candidate
             
 
 

@@ -29,3 +29,6 @@ class Queue:
         self.max_exit = int(exitTime[1])
         print(self.min_exit)
         print(self.states)
+
+    def getId(self):
+        return self.index

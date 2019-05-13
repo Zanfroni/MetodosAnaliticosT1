@@ -29,7 +29,7 @@ def read():
                 f.readline()
                 new_queue = {}
                 
-                newline = f.readline()
+                newline = f.readline().strip()
                 new_queue['id'] = newline
                 
                 newline = f.readline().strip().replace('Next ','')
