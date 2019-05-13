@@ -44,7 +44,7 @@ class Queue:
         return random.uniform(0,1)
         
     def shuffle_arrival(self,generator):
-        return (self.max_arrival - self.min_arrival) * generator.generate() + self.arrival
+        return (self.max_arrival - self.min_arrival) * generator.generate() + self.min_arrival
     
     def shuffle_exit(self,generator):
         return (self.max_exit - self.min_exit) * generator.generate() + self.min_exit
@@ -76,10 +76,10 @@ class Queue:
             self.currentState += 1
             if self.currentState <= self.server:
                 shuffle = self.shuffle_exit(generator)
-                schedule_exit(event['time'],shuffle,events)
-        else: loss += 1
+                self.schedule_exit(event['time'],shuffle,events)
+        else: self.loss += 1
         shuffle = self.shuffle_arrival(generator)
-        schedule_arrival(event['time'],shuffle,events)
+        self.schedule_arrival(event['time'],shuffle,events)
             
     def cont_exit(self,event,events,generator):
         print('Fila ' + str(self.index) + ' esta de tamanho ' + str(self.currentState))
@@ -89,7 +89,7 @@ class Queue:
         self.currentState -= 1
         if self.currentState >= self.server:
             shuffle = self.shuffle_exit(generator)
-            schedule_exit(event['time'],shuffle,events)
+            self.schedule_exit(event['time'],shuffle,events)
 
 
     # ABANDONADO. ENCONTROU-SE UMA SOLUCAO MUITO MAIS SIMPLES!!!

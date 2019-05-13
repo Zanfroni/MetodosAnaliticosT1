@@ -35,7 +35,7 @@ def launch():
                                 i['exit'])
         all_queues.append(newQ)
     
-    # Finalmente, da inicio a simulacao, contando as iteracoes        
+    # Finalmente, da inicio a simulacao, contando as iteracoes
     while True:
         if current_iteration >= iterations: break
         current_iteration += 1
@@ -55,6 +55,7 @@ def launch():
         
         if event['event'] == 'ch': selectedQueue.cont_arrival(event,events,generator)
         elif event['event'] == 'sa': selectedQueue.cont_exit(event,events,generator)
+        print(current_iteration)
         
         
         
@@ -62,7 +63,7 @@ def fetch_event(events):
     candidate = events.pop(0)
     for event in events:
         if event['time'] < candidate['time']:
-            events.append(cadidate)
+            events.append(candidate)
             candidate = event
             events.remove(event)
     return candidate
