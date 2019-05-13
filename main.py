@@ -1,5 +1,6 @@
 from reader import read
 from queue import Queue
+from generator import Generator
 
 def launch():
     
@@ -16,6 +17,7 @@ def launch():
     iterations = 1000
     
     # Variaveis importantes que nao devem ser alteradas
+    generator = Generator()
     current_iteration = 0
     events = [ {'queue':'Q1','event':'ch','time':actual_time,'shuffle':actual_time} ]
     all_queues = []
@@ -51,8 +53,8 @@ def launch():
         
         #BELEZA, FOI ESSA BOSTA!!
         
-        if event['event'] == 'ch': print('CONTABILIZA')
-        elif event['event'] == 'sa': print('CAGABILIZA')
+        if event['event'] == 'ch': selectedQueue.cont_arrival(event,events,generator)
+        elif event['event'] == 'sa': selectedQueue.cont_exit(event,events,generator)
         
         
         
