@@ -40,6 +40,7 @@ def launch():
         if current_iteration >= iterations: break
         current_iteration += 1
         event = fetch_event(events) # cuida pra ver se events é realmente manipulada
+        actual_time = event['time']
         
         # Agora, com o evento, deve-se ver se ele e CH ou SA e contabilizar de acordo
         # Tem que tambem ver se ele e intermediario ou nao
@@ -56,6 +57,14 @@ def launch():
         if event['event'] == 'ch': selectedQueue.cont_arrival(event,events,generator)
         elif event['event'] == 'sa': selectedQueue.cont_exit(event,events,generator)
         print(current_iteration)
+        
+    for queue in all_queues:
+        print('Fila ' + queue.getId(), end=' ')
+        newQ = queue.getStates()
+        print(newQ.items())
+        #for i in newQ:
+            #print('Coluna 222' + newQ.get(i))
+    print('TEMPO FINALZAO ' + str(actual_time))
         
         
         

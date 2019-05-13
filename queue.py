@@ -35,6 +35,9 @@ class Queue:
 
     def getId(self):
         return self.index
+       
+    def getStates(self):
+        return self.states
         
     # OBSERVACAO: Este aleatorio nao envolve nem entrada nem saida.
     # COMO O PROPRIO MATERIAL DE AULA MOSTRA, e um aleatorio qualquer
@@ -68,25 +71,31 @@ class Queue:
             events.append({'queue':self.index,'event':'ch','time':time + shuffle,'shuffle':shuffle})
             
     def cont_arrival(self,event,events,generator):
+        print('ARRIVAL ENTERED')
         print('Fila ' + str(self.index) + ' esta de tamanho ' + str(self.currentState))
         print('Aplicando algoritmo...')
         if self.currentState < self.capacity:
-            self.states[self.capacity] += event['time'] - self.previousTime
+            self.states[self.currentState] += event['time'] - self.previousTime
             self.previousTime = event['time']
             self.currentState += 1
+            print('Fila ' + str(self.index) + ' AGORA ATUALIZADA esta de tamanho ' + str(self.currentState))
             if self.currentState <= self.server:
                 shuffle = self.shuffle_exit(generator)
                 self.schedule_exit(event['time'],shuffle,events)
-        else: self.loss += 1
+        else:
+            self.loss += 1
+            print('PERDEU PLAYBOY')
         shuffle = self.shuffle_arrival(generator)
         self.schedule_arrival(event['time'],shuffle,events)
             
     def cont_exit(self,event,events,generator):
+        print('EXIT ENTERED')
         print('Fila ' + str(self.index) + ' esta de tamanho ' + str(self.currentState))
         print('Aplicando algoritmo...')
-        self.states[self.capacity] += event['time'] - self.previousTime
+        self.states[self.currentState] += event['time'] - self.previousTime
         self.previousTime = event['time']
         self.currentState -= 1
+        print('Fila ' + str(self.index) + ' AGORA ATUALIZADA esta de tamanho ' + str(self.currentState))
         if self.currentState >= self.server:
             shuffle = self.shuffle_exit(generator)
             self.schedule_exit(event['time'],shuffle,events)
