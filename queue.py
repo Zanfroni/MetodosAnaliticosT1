@@ -51,16 +51,16 @@ class Queue:
 
     ''' RETHINK HOW I'M GONNA SHARE THE WORK '''
     def cont_arrival(self,event,events,generator):
-        print('Fila ' + self.index + ' esta de tamanho ' + self.currentState)
+        print('Fila ' + str(self.index) + ' esta de tamanho ' + str(self.currentState))
         print('Aplicando algoritmo...')
         if self.currentState < self.capacity:
-            self.states[self.capacity] += event['time'] - previousTime
+            self.states[self.capacity] += event['time'] - self.previousTime
             self.previousTime = event['time']
             self.currentState += 1
             if self.currentState <= self.server:
-                if(shuffle_probability() < self.nextQueue):
+                if(self.shuffle_probability() < self.nextQueue):
                     # AQUI ELE AGENDA A ENTRADA PARA O PROXIMO
-                    shuffle = shuffle_exit(generator)
+                    shuffle = self.shuffle_exit(generator)
                 elif self.sameRotation == 0:
                     # AGENDA PARA ELE MESMO
                     shuffle = shuffle
