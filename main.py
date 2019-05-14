@@ -14,7 +14,7 @@ def launch():
     
     # Variaveis importantes que podem ser alteradas
     actual_time = 2
-    iterations = 1000
+    iterations = 100
     
     # Variaveis importantes que nao devem ser alteradas
     generator = Generator()

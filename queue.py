@@ -24,12 +24,15 @@ class Queue:
         self.outQueue = float(outQueue)
         self.server = int(server)
         self.capacity = int(capacity)
+        self.states = {}
         for i in range(self.capacity+1):
             self.states[i] = 0
         self.min_arrival = int(arrival[0])
         self.max_arrival = int(arrival[1])
         self.min_exit = int(exitTime[0])
         self.max_exit = int(exitTime[1])
+        self.loss = 0
+        self.currentState = 0
         print(self.min_exit)
         print(self.states)
 
@@ -38,6 +41,9 @@ class Queue:
        
     def getStates(self):
         return self.states
+    
+    def getLoss(self):
+        return loss
         
     # OBSERVACAO: Este aleatorio nao envolve nem entrada nem saida.
     # COMO O PROPRIO MATERIAL DE AULA MOSTRA, e um aleatorio qualquer
@@ -75,7 +81,7 @@ class Queue:
         print('Fila ' + str(self.index) + ' esta de tamanho ' + str(self.currentState))
         print('Aplicando algoritmo...')
         if self.currentState < self.capacity:
-            self.states[self.currentState] += event['time'] - self.previousTime
+            self.states[self.currentState] += (event['time'] - self.previousTime)
             self.previousTime = event['time']
             self.currentState += 1
             print('Fila ' + str(self.index) + ' AGORA ATUALIZADA esta de tamanho ' + str(self.currentState))
@@ -92,7 +98,7 @@ class Queue:
         print('EXIT ENTERED')
         print('Fila ' + str(self.index) + ' esta de tamanho ' + str(self.currentState))
         print('Aplicando algoritmo...')
-        self.states[self.currentState] += event['time'] - self.previousTime
+        self.states[self.currentState] += (event['time'] - self.previousTime)
         self.previousTime = event['time']
         self.currentState -= 1
         print('Fila ' + str(self.index) + ' AGORA ATUALIZADA esta de tamanho ' + str(self.currentState))
