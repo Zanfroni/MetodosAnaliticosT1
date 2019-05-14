@@ -1,6 +1,8 @@
+import sys
 from reader import read
 from queue import Queue
 from generator import Generator
+from timer import getTime
 
 def launch():
     
@@ -14,7 +16,7 @@ def launch():
     
     # Variaveis importantes que podem ser alteradas
     actual_time = 2
-    iterations = 10
+    iterations = 1000
     
     # Variaveis importantes que nao devem ser alteradas
     generator = Generator()
@@ -60,19 +62,20 @@ def launch():
         print('Fila ' + queue.getId(), end=' ')
         newQ = queue.getStates()
         print(newQ.items())
-        #for i in newQ:
-            #print('Coluna 222' + newQ.get(i))
-    print('TEMPO FINALZAO ' + str(actual_time))
+        print('LOSS DO BAGUI ' + str(queue.getLoss()))
+    print('TEMPO FINALZAO ' + str(getTime()))
         
         
         
 def fetch_event(events):
-    candidate = events.pop(0)
+    candidate = 0
+    time = sys.maxsize
     for event in events:
-        if event['time'] < candidate['time']:
-            events.append(candidate)
-            candidate = event
-            events.remove(event)
+        if event['time'] < time: time = event['time']
+    for event in events:
+       if event['time'] == time:
+           candidate = event
+           events.remove(event)
     return candidate
             
 
