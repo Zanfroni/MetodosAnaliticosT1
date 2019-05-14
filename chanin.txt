@@ -5,7 +5,7 @@ Next 1
 Same 0
 Out 0
 C 1
-K 3
+K 6
 CH 4..8
 SA 6..8
 
@@ -41,6 +41,6 @@ Next 0
 Same 0
 Out 1
 C 2
-K 6
+K 3
 CH 2..6
 SA 4..9

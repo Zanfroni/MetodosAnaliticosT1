@@ -64,6 +64,7 @@ class Queue:
     
     def schedule_exit(self,time,shuffle,events):
         events.append({'queue':self.index,'event':'sa','time':time + shuffle,'shuffle':shuffle})
+        print('SEI LA ' + str(time + shuffle))
         if(self.shuffle_probability() < self.nextQueue):
             # Se cair aqui, ele vai agendar chegada para a proxima fila
             string = self.index
@@ -82,6 +83,7 @@ class Queue:
         print('Aplicando algoritmo...')
         if self.currentState < self.capacity:
             self.states[self.currentState] += (event['time'] - self.previousTime)
+            print('ENTRADA TEMPO ' + str(self.states[self.currentState]) + ' EM ' + self.index + ' ' + str(self.currentState))
             self.previousTime = event['time']
             self.currentState += 1
             print('Fila ' + str(self.index) + ' AGORA ATUALIZADA esta de tamanho ' + str(self.currentState))
@@ -99,6 +101,7 @@ class Queue:
         print('Fila ' + str(self.index) + ' esta de tamanho ' + str(self.currentState))
         print('Aplicando algoritmo...')
         self.states[self.currentState] += (event['time'] - self.previousTime)
+        print('ENTRADA TEMPO ' + str(self.states[self.currentState]) + ' EM ' + self.index + ' ' + str(self.currentState))
         self.previousTime = event['time']
         self.currentState -= 1
         print('Fila ' + str(self.index) + ' AGORA ATUALIZADA esta de tamanho ' + str(self.currentState))

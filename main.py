@@ -14,12 +14,12 @@ def launch():
     
     # Variaveis importantes que podem ser alteradas
     actual_time = 2
-    iterations = 100
+    iterations = 10
     
     # Variaveis importantes que nao devem ser alteradas
     generator = Generator()
     current_iteration = 0
-    events = [ {'queue':'Q1','event':'ch','time':actual_time,'shuffle':actual_time} ]
+    events = [ {'queue':'Q1','event':'ch','time':actual_time,'shuffle':0} ]
     all_queues = []
     
     # Agora, cria as filas
@@ -40,14 +40,12 @@ def launch():
         if current_iteration >= iterations: break
         current_iteration += 1
         event = fetch_event(events) # cuida pra ver se events é realmente manipulada
-        actual_time = event['time']
+        actual_time += event['shuffle']
         
         # Agora, com o evento, deve-se ver se ele e CH ou SA e contabilizar de acordo
         # Tem que tambem ver se ele e intermediario ou nao
         selectedQueue = '-1'
         for i in all_queues:
-            print('oi ' + i.getId())
-            print('tchu ' + event['queue'])
             if i.getId() == event['queue']: selectedQueue = i
                         
         print('got here ' + selectedQueue.getId())
