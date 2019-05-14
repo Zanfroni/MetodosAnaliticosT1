@@ -7,12 +7,6 @@ from timer import getTime
 def launch():
     
     read_queues = read()
-    print()
-    print()
-    print()
-    print(read_queues)
-    print()
-    print(read_queues[1]['exit'][1])
     
     # Variaveis importantes que podem ser alteradas
     actual_time = 2
@@ -26,7 +20,6 @@ def launch():
     
     # Agora, cria as filas
     for i in read_queues:
-        print('okay ' + i['capacity'])
         newQ = Queue(i['id'].replace('\n',''),
                                 i['next'],
                                 i['same'],
@@ -41,6 +34,8 @@ def launch():
     while True:
         if current_iteration >= iterations: break
         current_iteration += 1
+        print('\n')
+        print('ESTAMOS NA ITERACAO ' + str(current_iteration))
         event = fetch_event(events) # cuida pra ver se events é realmente manipulada
         actual_time += event['shuffle']
         
@@ -49,23 +44,47 @@ def launch():
         selectedQueue = '-1'
         for i in all_queues:
             if i.getId() == event['queue']: selectedQueue = i
-                        
-        print('got here ' + selectedQueue.getId())
-        
-        #BELEZA, FOI ESSA BOSTA!!
         
         if event['event'] == 'ch': selectedQueue.cont_arrival(event,events,generator)
         elif event['event'] == 'sa': selectedQueue.cont_exit(event,events,generator)
-        print(current_iteration)
+    
+    print('\n')
+    print('RESULTADOS FINAIS:')
+    print('==================')
+    print('\n')
+    print('TEMPOS DE EXECUCAO')
+    print('------------------')
+    print('LEGENDA: [(estado, tempo), (estado, tempo),...]')
+    print('\n')
+    printTime(all_queues)
+    print('\n')
+    print('DISTRIBUICAO E PERDAS')
+    print('---------------------')
+    printResults(all_queues)
+    
+def printResults(all_queues):
+    for queue in all_queues:
+        print('FILA ' + queue.getId() + ':')
+        newQ = queue.getStates()
+        totalSum = 0
+        for i in range(len(newQ)):
+            totalSum += newQ.get(i)
+        # tenho minha soma
+        for i in range(len(newQ)):
+            percent = newQ.get(i)
+            print('{0:.2f}%'.format(((percent/totalSum)*100)))
+        print('NUMERO DE LOSSES DA FILA: ' + str(queue.getLoss()))
+        print()
         
+	
+        
+def printTime(all_queues):
     for queue in all_queues:
         print('Fila ' + queue.getId(), end=' ')
         newQ = queue.getStates()
         print(newQ.items())
-        print('LOSS DO BAGUI ' + str(queue.getLoss()))
-    print('TEMPO FINALZAO ' + str(getTime()))
-        
-        
+        #print('LOSS DA FILA = ' + str(queue.getLoss()))
+    print('TEMPO DA SIMULACAO = ' + str(getTime()) + ' segundos')
         
 def fetch_event(events):
     candidate = 0

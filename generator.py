@@ -12,10 +12,11 @@ class Generator:
     # Estes sao os valores de entrada inicial quando o Gerador e chamado pela primeira vez.
     # Perceba que o X vai mudar constantemente, enquanto os outros tres valores
     # permanecerao constantes.
-    x_seed = 19
-    M = 4493
-    a = 500
-    c = 4
+    x_seed = 12
+    
+    a = 323
+    M = 3800
+    c = 3
 
     # Chama-se esta funcao para realizar a conta e gerar um numero. O seed sera atualizado.
     def generate(self):
