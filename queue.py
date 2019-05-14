@@ -1,6 +1,15 @@
 import random
 from timer import setTime
 
+'''
+Esta classe representa CADA fila da simulacao. Ela ira conter todos os
+dados necessarios, como capacidade, servidores, tempos de entrada e saida
+para numero pseudo-aleatorio...
+
+Ela ira conter em formato de hashes, todos os seus estados (por exemplo:
+com capacidade 4, ela tera estados 0...5).
+'''
+
 class Queue:
     index = None
     nextQueue = None
@@ -14,6 +23,7 @@ class Queue:
     min_exit = None
     max_exit = None
     
+    # Variaveis de controle
     currentState = 0
     loss = 0
     previousTime = 0
@@ -50,13 +60,18 @@ class Queue:
     # passo, logo teve-se que se usar um random qualquer.
     def shuffle_probability(self):
         return random.uniform(0,1)
-        
+    
+    # Geradores de numeros pseudo-aleatorios. Chamam o generator para
+    # retornar o valor    
     def shuffle_arrival(self,generator):
         return (self.max_arrival - self.min_arrival) * generator.generate() + self.min_arrival
     
     def shuffle_exit(self,generator):
         return (self.max_exit - self.min_exit) * generator.generate() + self.min_exit
-        
+    
+    
+    # Estas duas funcoes a seguir simplesmente agendam uma chegada ou
+    # saida, de acordo com o tempo e sorteio providos.    
     def schedule_arrival(self,time,shuffle,events):
         if self.index == 'Q1':
             events.append({'queue':self.index,'event':'ch','time':time + shuffle,'shuffle':shuffle})
@@ -74,7 +89,15 @@ class Queue:
             # Se ter rotacao para ele mesmo, agenda chegada para ele mesmo
             # Se ele cair fora do sistema, nao faz nada, pois a saida ja fara o trabalho
             events.append({'queue':self.index,'event':'ch','time':time + shuffle,'shuffle':shuffle})
-            
+     
+     
+    # As duas funcoes a seguir servem como os algoritmos de contabilizacao
+    # Eles foram adaptados para funcionar com todos os tipos de rotacoes,
+    # seja de uma fila para outra, como de uma fila para ela mesma.
+    # Como o algoritmo de rotacao e bastante parecido, no cont_exit(),
+    # foi agendado uma saida e uma entrada com o mesmo tempo, pois o
+    # algoritmo resumidamente e baseado neste conceito.
+    
     def cont_arrival(self,event,events,generator):
         print('CONTABILIZANDO CHEGADA...')
         print('Fila ' + str(self.index) + ' entrou de tamanho ' + str(self.currentState))

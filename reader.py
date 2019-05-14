@@ -15,7 +15,7 @@ que ele imediatamente retorna o valor guardado
 '''
 def read():
     try:
-        with open('chanin.txt', 'r') as f:
+        with open('chanin.txt', 'r') as f: # OBS: o .txt pode ser alterado
             # Tamanho da fila
             queueSize = int(f.readline().strip().replace('Size ',''))
             
