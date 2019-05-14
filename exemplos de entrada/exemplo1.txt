@@ -1,0 +1,46 @@
+Size 5
+
+Q1
+Next 0.4
+Same 0.6
+Out 0
+C 2
+K 4
+CH 2..6
+SA 1..4
+
+Q2
+Next 0.8
+Same 0
+Out 0.2
+C 2
+K 2
+CH 2..5
+SA 1..4
+
+Q3
+Next 1
+Same 0
+Out 0
+C 1
+K 2
+CH 2..5
+SA 5..9
+
+Q4
+Next 0.5
+Same 0.5
+Out 0
+C 1
+K 3
+CH 2..5
+SA 4..6
+
+Q5
+Next 0
+Same 0.2
+Out 0.8
+C 2
+K 3
+CH 1..2
+SA 3..6

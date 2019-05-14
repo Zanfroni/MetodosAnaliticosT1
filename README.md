@@ -1,7 +1,7 @@
 # MetodosAnaliticosT1
 Primeiro trabalho da disciplina de Simulação e Métodos Analíticos do curso de Engenharia de Software, PUCRS
 
-Integrantes: Annderson Packeiser Oreto e Gabriel Franzoni
+Integrantes: Annderson Packeiser Oreto, Ezequiel Rinco e Gabriel Franzoni
 
 COMO EXECUTAR O ALGORITMO:
 ==========================
@@ -50,8 +50,9 @@ OBSERVACOES:
 
 Existem dois diretorios a mais, onde um possui outras entradas
 .txt para serem testadas recomendadas para ver as diferencas
-na execucao da simulacao. O outro diretorio contem graficos
-gerados para mostrar a aleatoriedade dos numeros pseudo-aleatorios
+na execucao da simulacao. O outro diretorio contem um grafico gerado
+a partir das variaveis padrao que inserimos no gerador com objetivo de
+mostrar a aleatoriedade dos numeros pseudo-aleatorios
 dos exemplos. Lembre-se de copiar os conteudos dos exemplos de entrada
 para chanin.txt.
 
